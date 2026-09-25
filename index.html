@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 1st Anniversary, My Love! 💖</title>
+  <style>
+    :root {
+      --primary: #b03a58;
+      --secondary: #e99aab;
+      --paper: #fffaf3;
+      --ink: #412431;
+      --muted: #80636c;
+      --line: #ead3c8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #28131d;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--ink);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 32px 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(35, 10, 20, 0.57);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .background-slideshow {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      background: #28131d;
+    }
+
+    .background-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      opacity: 1;
+      filter: saturate(1.08);
+      transition: opacity 0.8s ease, transform 7s ease;
+      transform: scale(1.03);
+    }
+
+    .background-image.is-changing {
+      opacity: 0.05;
+      transform: scale(1.08);
+    }
+
+    .card {
+      background: var(--paper);
+      max-width: 760px;
+      width: 100%;
+      border-radius: 4px;
+      padding: clamp(24px, 5vw, 56px);
+      box-shadow: 0 24px 70px rgba(36, 11, 23, 0.35);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      position: relative;
+    }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-color: var(--secondary);
+      opacity: 0.75;
+    }
+
+    .card::before {
+      top: 16px;
+      left: 16px;
+      border-top: 1px solid;
+      border-left: 1px solid;
+    }
+
+    .card::after {
+      right: 16px;
+      bottom: 16px;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+    }
+
+    .music-player {
+      background: #4f2636;
+      color: white;
+      border-radius: 3px;
+      padding: 16px 20px;
+      margin-bottom: 34px;
+      box-shadow: 0 8px 20px rgba(65, 36, 49, 0.2);
+    }
+
+    .music-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .photo-note {
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 8px 0 20px;
+      font-style: italic;
+    }
+
+    audio {
+      width: 100%;
+      height: 40px;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .cake-container {
+      margin: 6px 0 14px;
+      position: relative;
+    }
+
+    .cake-image {
+      max-width: 150px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 15px rgba(65, 36, 49, 0.16));
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .cake-caption {
+      font-size: clamp(2.3rem, 7vw, 4.4rem);
+      line-height: 0.98;
+      font-family: 'Brush Script MT', 'Segoe Script', cursive;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 10px auto 12px;
+      max-width: 620px;
+      text-shadow: 1px 1px 0 #f5dce0;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--secondary), transparent);
+      margin: 30px 0;
+    }
+
+    .memory-book {
+      margin: 20px auto 0;
+      max-width: 620px;
+    }
+
+    .slideshow {
+      position: relative;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 25px rgba(65, 36, 49, 0.14);
+      transform: rotate(-1deg);
+    }
+
+    .slide-frame {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #eadfd8;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 1;
+      transition: opacity 0.45s ease, transform 0.7s ease;
+    }
+
+    .slide-image.is-changing {
+      opacity: 0.15;
+      transform: scale(1.03);
+    }
+
+    .slide-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(65, 36, 49, 0.84);
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .slide-button:hover,
+    .slide-button:focus-visible {
+      background: var(--primary);
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .slide-button.previous { left: 22px; }
+    .slide-button.next { right: 22px; }
+
+    .slide-caption {
+      color: var(--muted);
+      font-size: 1rem;
+      font-style: italic;
+      margin-top: 17px;
+    }
+
+    .slide-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .slide-dot {
+      width: 8px;
+      height: 8px;
+      border: 0;
+      border-radius: 50%;
+      background: #d9bdc2;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .slide-dot.active { background: var(--primary); transform: scale(1.35); }
+
+    .message-body {
+      font-size: 1.08rem;
+      line-height: 1.85;
+      text-align: left;
+      white-space: pre-line;
+      color: var(--message-color, var(--ink));
+      background-color: rgba(255, 253, 249, 0.68);
+      padding: clamp(20px, 4vw, 34px);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--primary);
+      box-shadow: inset 0 0 35px rgba(234, 211, 200, 0.18);
+      position: relative;
+      transition: color 0.65s ease, background-color 0.65s ease;
+    }
+
+    .message-body b {
+      color: inherit;
+      font-family: 'Brush Script MT', 'Segoe Script', cursive;
+      font-size: 1.35em;
+      font-weight: 700;
+    }
+
+    .message-stage {
+      position: relative;
+      margin-top: 26px;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .message-background {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #eadfd8;
+    }
+
+    .message-background-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.58;
+      filter: saturate(1.2) contrast(1.04);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .message-background-image.is-changing {
+      opacity: 0;
+      transform: scale(1.05);
+    }
+
+    .message-stage .message-body {
+      margin: 0;
+    }
+
+    .rainbow-red { --message-color: #b12b4d; }
+    .rainbow-orange { --message-color: #bd5a2a; }
+    .rainbow-yellow { --message-color: #9b741d; }
+    .rainbow-green { --message-color: #477346; }
+    .rainbow-blue { --message-color: #35658b; }
+    .rainbow-indigo { --message-color: #58518f; }
+    .rainbow-violet { --message-color: #87518a; }
+
+    .heart-rain {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .falling-heart {
+      position: absolute;
+      top: -2rem;
+      left: var(--heart-left);
+      color: var(--heart-color);
+      font-size: var(--heart-size);
+      opacity: 0;
+      animation: heart-fall var(--heart-duration) linear var(--heart-delay) infinite;
+      filter: drop-shadow(0 2px 2px rgba(65, 36, 49, 0.16));
+    }
+
+    @keyframes heart-fall {
+      0% { opacity: 0; transform: translate3d(0, -10vh, 0) rotate(0deg); }
+      12% { opacity: 0.78; }
+      88% { opacity: 0.58; }
+      100% { opacity: 0; transform: translate3d(var(--heart-drift), 112vh, 0) rotate(280deg); }
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 12px 8px; }
+      .card { padding: 24px 17px; }
+      .slide-button { width: 34px; height: 34px; font-size: 1.2rem; }
+      .slide-button.previous { left: 17px; }
+      .slide-button.next { right: 17px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-slideshow" aria-hidden="true">
+    <img class="background-image" alt="" />
+  </div>
+  <div class="heart-rain" aria-hidden="true"></div>
+
+  <div class="card">
+    <!-- Romantic Music Player -->
+    <div class="music-player">
+      <div class="music-title">🎵 Lovers - Anna of the North (Press Play) 💖</div>
+      <audio controls autoplay loop>
+        <source src="Anna%20of%20the%20North%20-%20Lovers%20%28from%20To%20All%20the%20Boys%20I%27ve%20Loved%20Before%29%20-%20%28320%20Kbps%29.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <!-- Anniversary Cake Illustration -->
+    <div class="cake-container">
+      <svg class="cake-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Plate -->
+        <ellipse cx="100" cy="170" rx="80" ry="15" fill="#e0e0e0" />
+        <ellipse cx="100" cy="167" rx="75" ry="12" fill="#ffffff" />
+        <!-- Slice / Cake Body -->
+        <path d="M 40 120 L 100 160 L 160 120 L 160 80 L 100 40 L 40 80 Z" fill="#ff758f" />
+        <path d="M 100 160 L 160 120 L 160 80 L 100 120 Z" fill="#c9184a" />
+        <!-- Cream Layers -->
+        <path d="M 40 100 L 100 140 L 160 100" stroke="#ffffff" stroke-width="6" fill="none" />
+        <!-- Top Frosting -->
+        <path d="M 40 80 L 100 40 L 160 80 L 100 120 Z" fill="#ffb3c1" />
+        <!-- Strawberry on top -->
+        <circle cx="100" cy="40" r="12" fill="#ff0054" />
+        <path d="M 98 28 L 102 24 L 100 28 Z" fill="#38b000" />
+        <!-- Candle -->
+        <rect x="97" y="10" width="6" height="20" fill="#fff" />
+        <path d="M 100 2 C 103 6, 103 8, 100 10 C 97 8, 97 6, 100 2 Z" fill="#ffbd00" />
+      </svg>
+      <div class="cake-caption">Happy Anniversary My Love! 🎂✨</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="memory-book">
+      <div class="slideshow" aria-label="Our memories slideshow">
+        <div class="slide-frame">
+          <img class="slide-image" alt="A memory of us" />
+        </div>
+        <button class="slide-button previous" type="button" aria-label="Previous memory">&#8249;</button>
+        <button class="slide-button next" type="button" aria-label="Next memory">&#8250;</button>
+      </div>
+      <div class="slide-caption">Our favorite memories, right here with us. 💞</div>
+      <div class="slide-dots" aria-label="Choose a memory"></div>
+    </div>
+
+    <!-- Personalized Message -->
+    <div class="message-stage">
+      <div class="message-background" aria-hidden="true">
+        <img class="message-background-image" alt="" />
+      </div>
+      <div class="message-body rainbow-red">
+💖✨ <b>HAPPY 1ST ANNIVERSARY, MY LOVE!</b> 🎉🥂🍾
+
+One whole year of us—365 days of choosing each other, loving each other, and growing together through it all! 🌹💫
+
+Looking back on our journey, I know it hasn't always been easy. We’ve faced real struggles, walked through heavy days, and weathered storms that could have broken us. 🌩️🌧️ But through every single challenge, miscommunication, and hard moment, you stayed. 🥹🤍 You chose to stand by my side, to fight for us, and to love me even when things felt tough. 🫂✨
+
+Your loyalty, patience, and love mean more to me than words could ever truly express. 💘 Thank you for believing in us, for holding my hand when the road got rough, and for proving that when we stand together, we can overcome anything. 🛡️💖
+
+We built this bond step-by-step, turning every test into proof of how strong our love really is. 🧱💖 I am so proud of how far we’ve come and so grateful for the "us against the world" spirit that keeps us connected. 🌍🔐
+
+Here’s to ONE YEAR down and a lifetime of happiness, laughter, and endless love to go! 🥂✨ Happy Anniversary, my heart! I love you endlessly! 💕🥳💖🎁🎊
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const memories = [
+      'WhatsApp%20Image%202026-09-25%20at%2009.35.18.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.35.12.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.35.11.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.35.09.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.49.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.46.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.46%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.45.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.45%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.44.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.43.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.43%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.42.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.42%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.41.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.41%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.38.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.38%20%282%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.38%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.37.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.36.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.36%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.32.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.30.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.28.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.28%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2009.34.27.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.38.45.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.38.41.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.38.36.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.31.03.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.31.02.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.31.01.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.31.01%20%281%29.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.31.00.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.30.59.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.30.58.jpeg',
+      'WhatsApp%20Image%202026-09-25%20at%2007.30.57.jpeg',
+      'us.jpeg',
+      '5.jpeg',
+      '4.jpeg',
+      '3.jpeg',
+      '2.jpeg'
+    ];
+
+    const slideImage = document.querySelector('.slide-image');
+    const backgroundImage = document.querySelector('.background-image');
+    const messageBackgroundImage = document.querySelector('.message-background-image');
+    const messageBody = document.querySelector('.message-body');
+    const dotsContainer = document.querySelector('.slide-dots');
+    const heartRain = document.querySelector('.heart-rain');
+    const rainbowClasses = ['rainbow-red', 'rainbow-orange', 'rainbow-yellow', 'rainbow-green', 'rainbow-blue', 'rainbow-indigo', 'rainbow-violet'];
+    const backgroundOffset = 13;
+    const messageBackgroundOffset = 27;
+    let currentMemory = 0;
+
+    for (let heartIndex = 0; heartIndex < 24; heartIndex += 1) {
+      const heart = document.createElement('span');
+      heart.className = 'falling-heart';
+      heart.textContent = heartIndex % 3 === 0 ? '💗' : heartIndex % 3 === 1 ? '💕' : '💖';
+      heart.style.setProperty('--heart-left', `${Math.random() * 100}%`);
+      heart.style.setProperty('--heart-size', `${0.72 + Math.random() * 0.58}rem`);
+      heart.style.setProperty('--heart-duration', `${8 + Math.random() * 7}s`);
+      heart.style.setProperty('--heart-delay', `${Math.random() * 9}s`);
+      heart.style.setProperty('--heart-drift', `${-70 + Math.random() * 140}px`);
+      heart.style.setProperty('--heart-color', ['#d94f70', '#e989a0', '#bb5277'][heartIndex % 3]);
+      heartRain.appendChild(heart);
+    }
+
+    memories.forEach((memory, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'slide-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Show memory ${index + 1}`);
+      dot.addEventListener('click', () => showMemory(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    function showMemory(index) {
+      currentMemory = (index + memories.length) % memories.length;
+      const backgroundMemory = (currentMemory + backgroundOffset) % memories.length;
+      const messageMemory = (currentMemory + messageBackgroundOffset) % memories.length;
+      slideImage.classList.add('is-changing');
+      backgroundImage.classList.add('is-changing');
+      messageBackgroundImage.classList.add('is-changing');
+      messageBody.classList.remove(...rainbowClasses);
+      messageBody.classList.add(rainbowClasses[messageMemory % rainbowClasses.length]);
+      window.setTimeout(() => {
+        slideImage.src = memories[currentMemory];
+        backgroundImage.src = memories[backgroundMemory];
+        messageBackgroundImage.src = memories[messageMemory];
+        slideImage.classList.remove('is-changing');
+        backgroundImage.classList.remove('is-changing');
+        messageBackgroundImage.classList.remove('is-changing');
+      }, 180);
+      document.querySelectorAll('.slide-dot').forEach((dot, dotIndex) => {
+        dot.classList.toggle('active', dotIndex === currentMemory);
+      });
+    }
+
+    document.querySelector('.previous').addEventListener('click', () => showMemory(currentMemory - 1));
+    document.querySelector('.next').addEventListener('click', () => showMemory(currentMemory + 1));
+    showMemory(0);
+    window.setInterval(() => showMemory(currentMemory + 1), 5000);
+  </script>
+
+</body>
+</html>
