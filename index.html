@@ -362,7 +362,7 @@
     <!-- Romantic Music Player -->
     <div class="music-player">
       <div class="music-title">🎵 Lovers - Anna of the North (Press Play) 💖</div>
-      <audio controls autoplay loop>
+      <audio id="anniversary-song" controls autoplay loop>
         <source src="Anna%20of%20the%20North%20-%20Lovers%20%28from%20To%20All%20the%20Boys%20I%27ve%20Loved%20Before%29%20-%20%28320%20Kbps%29.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
@@ -474,6 +474,7 @@ Here’s to ONE YEAR down and a lifetime of happiness, laughter, and endless lov
     ];
 
     const slideImage = document.querySelector('.slide-image');
+    const anniversarySong = document.querySelector('#anniversary-song');
     const backgroundImage = document.querySelector('.background-image');
     const messageBackgroundImage = document.querySelector('.message-background-image');
     const messageBody = document.querySelector('.message-body');
@@ -483,6 +484,15 @@ Here’s to ONE YEAR down and a lifetime of happiness, laughter, and endless lov
     const backgroundOffset = 13;
     const messageBackgroundOffset = 27;
     let currentMemory = 0;
+
+    function startMusic() {
+      anniversarySong.play().catch(() => {
+        // Browsers may require the first click or tap before allowing sound.
+      });
+    }
+
+    window.addEventListener('load', startMusic);
+    document.addEventListener('pointerdown', startMusic, { once: true });
 
     for (let heartIndex = 0; heartIndex < 24; heartIndex += 1) {
       const heart = document.createElement('span');
